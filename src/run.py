@@ -111,6 +111,11 @@ def main(*images):
         angle = abs(alpha1 - alpha2)
 
         return angle
+    
+    def convertJson(data):
+        if isinstance(data, np.int64):
+            return int(data)
+        raise TypeError(f"Object of type {type(data)} is not JSON serializable")
 
     thetas = np.arange(-np.pi / 4, np.pi / 4, np.pi / 64).astype(float)
 
@@ -118,10 +123,11 @@ def main(*images):
 
         """FIRST PART: GET THE IMAGE READY FOR THE EVALUATION"""
         # image acquisition
-        imagebw = skimage.io.imread(image, as_gray=True)
+        #imagebw = skimage.io.imread(image, as_gray=True)
 
         # image enhancement
-        img_enhanced = exposure.equalize_adapthist(imagebw)
+        #img_enhanced = exposure.equalize_adapthist(imagebw)
+        img_enhanced = exposure.equalize_adapthist(image)
         img_filtered = cv2.medianBlur(img_enhanced.astype('float32'), 3)
     
         # image segmentation
@@ -188,7 +194,7 @@ def main(*images):
 
         """JSON OUTPUT"""
         data = [
-            { "filename": "ok",
+            { "filename": "nn",
               "incision_polyline": incision_line,
               "crossing_positions": intersections,
               "crossing_angles": angles,
@@ -196,5 +202,10 @@ def main(*images):
         ]
 
         output.append(data)
+
+    outputSerializable = json.loads(json.dumps(output, default=convertJson))
+
+    with open('output.json', 'w') as f:
+        json.dump(outputSerializable, f, ensure_ascii=False, indent=4)
 
     return(output)
