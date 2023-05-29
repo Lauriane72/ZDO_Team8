@@ -198,6 +198,8 @@ def main(*images):
               "crossing_angles": angles,
             }, 
         ]
+        
+        # I did not manage to get the filename
 
         output.append(data)
 
