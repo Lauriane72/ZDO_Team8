@@ -150,7 +150,6 @@ def main(*images):
         """SECOND PART: PREPARATION TO EVALUATION"""
         # get the horizontal line
         vertical = []
-        #lines = []
         intersections = []
         angles = []
 
