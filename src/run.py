@@ -194,7 +194,7 @@ def main(*images):
 
         """JSON OUTPUT"""
         data = [
-            { "filename": "nn",
+            { "filename": "incision",
               "incision_polyline": incision_line,
               "crossing_positions": intersections,
               "crossing_angles": angles,
