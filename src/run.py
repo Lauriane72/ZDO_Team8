@@ -123,11 +123,10 @@ def main(*images):
 
         """FIRST PART: GET THE IMAGE READY FOR THE EVALUATION"""
         # image acquisition
-        #imagebw = skimage.io.imread(image, as_gray=True)
+        imagebw = skimage.io.imread(image, as_gray=True)
 
         # image enhancement
-        #img_enhanced = exposure.equalize_adapthist(imagebw)
-        img_enhanced = exposure.equalize_adapthist(image)
+        img_enhanced = exposure.equalize_adapthist(imagebw)
         img_filtered = cv2.medianBlur(img_enhanced.astype('float32'), 3)
     
         # image segmentation
