@@ -200,6 +200,7 @@ def main(*images):
         ]
         
         # I did not manage to get the filename
+        # maybe os.path ?
 
         output.append(data)
 
