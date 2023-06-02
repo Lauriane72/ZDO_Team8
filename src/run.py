@@ -1,5 +1,6 @@
 #technical packages
 import json
+import sys
 
 #work packages
 import math
@@ -190,17 +191,19 @@ def main(*images):
             intersections.append(intersectLines(incision_line[:2], incision_line[2:], lines[line][:2], lines[line][2:])[:2])
             angles.append(calculateAngles(incision_line[:2], incision_line[2:], lines[line][:2], lines[line][2:]))
 
+        i=0
+            
         """JSON OUTPUT"""
         data = [
-            { "filename": "incision",
+            { "filename": str(sys.argv[3+i]),
               "incision_polyline": incision_line,
               "crossing_positions": intersections,
               "crossing_angles": angles,
+              "coordinates_lines": lines,
             }, 
         ]
         
-        # I did not manage to get the filename
-        # maybe os.path ?
+        i+=1
 
         output.append(data)
 
@@ -210,3 +213,42 @@ def main(*images):
         json.dump(outputSerializable, f, ensure_ascii=False, indent=4)
 
     return(output)
+
+
+
+
+
+with open('output.json') as f:
+    data = json.load(f)
+
+    
+if __name__ == '__main__':
+
+    visualization = sys.argv[2] == '-v'
+
+    if visualization:
+            
+        for image in range(len(data)):
+
+            img = data[image]
+            filename = img[image]["filename"]
+            incision = img[image]["incision_polyline"]
+            positions = img[image]["crossing_positions"]
+            angles = img[image]["crossing_angles"]
+            lines = img[image]["coordinates_lines"]
+
+            x,y,X,Y=incision
+            plt.imshow(filename)
+            plt.plot((x,X),(y,Y),'r')
+            for points in range(len(lines)):
+                x0,y0,x1,y1=lines[points]
+                plt.plot((x0,x1),(y0,y1),'b')
+            plt.show()
+
+                
+            
+            
+            
+            
+            
+            
