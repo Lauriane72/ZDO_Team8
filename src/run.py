@@ -4,7 +4,7 @@ import sys
 
 #work packages
 import math
-
+from matplotlib import pyplot as plt
 import numpy as np
 
 import cv2
@@ -191,6 +191,17 @@ def main(*images):
             intersections.append(intersectLines(incision_line[:2], incision_line[2:], lines[line][:2], lines[line][2:])[:2])
             angles.append(calculateAngles(incision_line[:2], incision_line[2:], lines[line][:2], lines[line][2:]))
 
+        # evaluation
+        evaluation=[]
+        perpendicularity = sum(angles)/len(angles)
+
+        if perpendicularity >= 85:
+            evaluation.append((perpendicularity,"Excellent perpendicularity"))
+        elif 74 < perpendicularity < 85:
+            evaluation.append((perpendicularity,"Good perpendicularity"))
+        else:
+            evaluation.append((perpendicularity,"Bad perpendicularity"))
+
         i=0
             
         """JSON OUTPUT"""
@@ -199,7 +210,7 @@ def main(*images):
               "incision_polyline": incision_line,
               "crossing_positions": intersections,
               "crossing_angles": angles,
-              "coordinates_lines": lines,
+              "evaluation": evaluation,
             }, 
         ]
         
@@ -217,10 +228,8 @@ def main(*images):
 
 
 
-
 with open('output.json') as f:
     data = json.load(f)
-
     
 if __name__ == '__main__':
 
@@ -236,19 +245,17 @@ if __name__ == '__main__':
             positions = img[image]["crossing_positions"]
             angles = img[image]["crossing_angles"]
             lines = img[image]["coordinates_lines"]
-
+            eval=img[image]["evaluation"]
+            
             x,y,X,Y=incision
             plt.imshow(filename)
             plt.plot((x,X),(y,Y),'r')
+            plt.title(eval[0][1]+" with degree of "+str(eval[0][0]))
+            
             for points in range(len(lines)):
                 x0,y0,x1,y1=lines[points]
                 plt.plot((x0,x1),(y0,y1),'b')
-            plt.show()
-
-                
-            
-            
-            
-            
-            
-            
+    
+    
+    
+   
