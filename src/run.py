@@ -250,7 +250,7 @@ if __name__ == '__main__':
             x,y,X,Y=incision
             plt.imshow(filename, cmap='gray')
             plt.plot((x,X),(y,Y),'r')
-            plt.title(eval[0][1]+" with degree of "+str(eval[0][0]))
+            plt.title(eval[0][1]+" with an average angle of "+str(eval[0][0]))
             
             for points in range(len(lines)):
                 x0,y0,x1,y1=lines[points]
