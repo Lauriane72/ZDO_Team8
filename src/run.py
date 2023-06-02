@@ -248,7 +248,7 @@ if __name__ == '__main__':
             eval=img[image]["evaluation"]
             
             x,y,X,Y=incision
-            plt.imshow(filename)
+            plt.imshow(filename, cmap='gray')
             plt.plot((x,X),(y,Y),'r')
             plt.title(eval[0][1]+" with degree of "+str(eval[0][0]))
             
