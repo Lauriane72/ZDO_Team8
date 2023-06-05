@@ -201,8 +201,6 @@ def main(*images):
             evaluation.append((perpendicularity,"Good perpendicularity"))
         else:
             evaluation.append((perpendicularity,"Bad perpendicularity"))
-
-        i=0
             
         """JSON OUTPUT"""
         data = [
@@ -214,8 +212,6 @@ def main(*images):
               "evaluation": evaluation,
             }, 
         ]
-        
-        i+=1
 
         output.append(data)
 
@@ -237,15 +233,10 @@ if __name__ == '__main__':
 
     if visualization:
 
-        i=1
-
         for image in range(len(output)):
 
-
-            plt.figure(i)
-
             img = output[image]
-            filename = img[0]["filename"]  
+            filename = img[0]["filename"]
             incision = img[0]["incision_polyline"]
             positions = img[0]["crossing_positions"]
             angles = img[0]["crossing_angles"]
@@ -262,6 +253,5 @@ if __name__ == '__main__':
                 x0, y0, x1, y1 = lines[points]
                 plt.plot((x0, x1), (y0, y1), 'b')
 
-            i+=1
-
+            plt.figure()
         plt.show()  
