@@ -206,7 +206,7 @@ def main(*images):
             
         """JSON OUTPUT"""
         data = [
-            { "filename": str(sys.argv[3+i]),
+            { "filename": image,
               "incision_polyline": incision_line,
               "crossing_positions": intersections,
               "crossing_angles": angles,
