@@ -141,7 +141,7 @@ def main(*images):
 
         # object description
         label = measure.label(img_morpho, background=0)
-        props = measure.regionprops_table(label, image, properties=['label','area','equivalent_diameter','mean_intensity','solidity'])
+        props = measure.regionprops_table(label, imagebw, properties=['label','area'])
         maxval = max(props['area'])
         img_labelled = morphology.remove_small_objects(label, min_size=maxval-1)
 
@@ -210,6 +210,7 @@ def main(*images):
               "incision_polyline": incision_line,
               "crossing_positions": intersections,
               "crossing_angles": angles,
+              "coordinates_lines": lines,
               "evaluation": evaluation,
             }, 
         ]
@@ -220,42 +221,47 @@ def main(*images):
 
     outputSerializable = json.loads(json.dumps(output, default=convertJson))
 
-    with open('output.json', 'w') as f:
+    with open('output.json', 'a') as f:  
         json.dump(outputSerializable, f, ensure_ascii=False, indent=4)
-
+        f.write('\n')
+    
     return(output)
 
-
-
-
-with open('output.json') as f:
-    data = json.load(f)
-    
+  
 if __name__ == '__main__':
+
+    for image in range(3, len(sys.argv)):
+        output = main(sys.argv[image])
 
     visualization = sys.argv[2] == '-v'
 
     if visualization:
-            
-        for image in range(len(data)):
 
-            img = data[image]
-            filename = img[image]["filename"]
-            incision = img[image]["incision_polyline"]
-            positions = img[image]["crossing_positions"]
-            angles = img[image]["crossing_angles"]
-            lines = img[image]["coordinates_lines"]
-            eval=img[image]["evaluation"]
-            
-            x,y,X,Y=incision
-            plt.imshow(filename, cmap='gray')
-            plt.plot((x,X),(y,Y),'r')
-            plt.title(eval[0][1]+" with an average angle of "+str(eval[0][0]))
-            
+        i=1
+
+        for image in range(len(output)):
+
+
+            plt.figure(i)
+
+            img = output[image]
+            filename = img[0]["filename"]  
+            incision = img[0]["incision_polyline"]
+            positions = img[0]["crossing_positions"]
+            angles = img[0]["crossing_angles"]
+            lines = img[0]["coordinates_lines"]
+            evaluation = img[0]["evaluation"]
+
+            x, y, X, Y = incision
+
+            plt.imshow(skimage.io.imread(filename, as_gray=True))
+            plt.plot((x, X), (y, Y), 'r')
+            plt.title(evaluation[0][1] + " with an average angle of " + str(evaluation[0][0]))
+
             for points in range(len(lines)):
-                x0,y0,x1,y1=lines[points]
-                plt.plot((x0,x1),(y0,y1),'b')
-    
-    
-    
-   
+                x0, y0, x1, y1 = lines[points]
+                plt.plot((x0, x1), (y0, y1), 'b')
+
+            i+=1
+
+        plt.show()  
