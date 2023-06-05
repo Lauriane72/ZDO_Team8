@@ -221,18 +221,20 @@ def main(*images):
         json.dump(outputSerializable, f, ensure_ascii=False, indent=4)
         f.write('\n')
     
-    return(output)
+    return(data)
 
   
 if __name__ == '__main__':
-
-    for image in range(3, len(sys.argv)):
-        output = main(sys.argv[image])
 
     visualization = sys.argv[2] == '-v'
 
     if visualization:
 
+        output = []
+
+        for image in range(3, len(sys.argv)):
+            output.append(main(sys.argv[image]))
+            
         for image in range(len(output)):
 
             img = output[image]
