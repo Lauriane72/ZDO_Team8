@@ -247,7 +247,7 @@ if __name__ == '__main__':
 
             x, y, X, Y = incision
 
-            plt.imshow(skimage.io.imread(filename, as_gray=True))
+            plt.imshow(skimage.io.imread(filename, as_gray=True), cmap='gray')
             plt.plot((x, X), (y, Y), 'r')
             plt.title(evaluation[0][1] + " with an average angle of " + str(evaluation[0][0]))
 
