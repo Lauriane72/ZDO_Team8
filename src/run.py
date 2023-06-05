@@ -192,7 +192,7 @@ def main(*images):
             angles.append(calculateAngles(incision_line[:2], incision_line[2:], lines[line][:2], lines[line][2:]))
 
         # evaluation
-        evaluation=[]
+        evaluation = []
         perpendicularity = sum(angles)/len(angles)
 
         if perpendicularity >= 85:
