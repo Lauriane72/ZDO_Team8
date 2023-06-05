@@ -230,10 +230,10 @@ if __name__ == '__main__':
 
     output = []
 
-    for image in range(3, len(sys.argv)):
-        output.append(main(sys.argv[image]))
-
     if visualization:
+
+        for image in range(3, len(sys.argv)):
+            output.append(main(sys.argv[image]))
 
         for image in range(len(output)):
             ind = output[image]
@@ -258,3 +258,8 @@ if __name__ == '__main__':
 
         plt.tight_layout()
         plt.show() 
+
+    else:
+
+        for image in range(2, len(sys.argv)):
+            output.append(main(sys.argv[image]))
