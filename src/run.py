@@ -234,16 +234,16 @@ if __name__ == '__main__':
 
         for image in range(3, len(sys.argv)):
             output.append(main(sys.argv[image]))
-            
+
         for image in range(len(output)):
 
-            img = output[image]
-            filename = img[0]["filename"]
-            incision = img[0]["incision_polyline"]
-            positions = img[0]["crossing_positions"]
-            angles = img[0]["crossing_angles"]
-            lines = img[0]["coordinates_lines"]
-            evaluation = img[0]["evaluation"]
+            ind = output[image]
+            filename = ind[0]["filename"]
+            incision = ind[0]["incision_polyline"]
+            positions = ind[0]["crossing_positions"]
+            angles = ind[0]["crossing_angles"]
+            lines = ind[0]["coordinates_lines"]
+            evaluation = ind[0]["evaluation"]
 
             x, y, X, Y = incision
 
