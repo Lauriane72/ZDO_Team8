@@ -228,12 +228,12 @@ if __name__ == '__main__':
 
     visualization = sys.argv[2] == '-v'
 
+    output = []
+
+    for image in range(3, len(sys.argv)):
+        output.append(main(sys.argv[image]))
+
     if visualization:
-
-        output = []
-
-        for image in range(3, len(sys.argv)):
-            output.append(main(sys.argv[image]))
 
         for image in range(len(output)):
             ind = output[image]
