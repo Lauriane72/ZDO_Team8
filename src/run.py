@@ -236,7 +236,6 @@ if __name__ == '__main__':
             output.append(main(sys.argv[image]))
 
         for image in range(len(output)):
-
             ind = output[image]
             filename = ind[0]["filename"]
             incision = ind[0]["incision_polyline"]
@@ -247,13 +246,15 @@ if __name__ == '__main__':
 
             x, y, X, Y = incision
 
+            plt.subplot(len(output), 1, image + 1)
             plt.imshow(skimage.io.imread(filename, as_gray=True), cmap='gray')
             plt.plot((x, X), (y, Y), 'r')
             plt.title(evaluation[0][1] + " with an average angle of " + str(evaluation[0][0]))
+            plt.xlabel(filename)
 
             for points in range(len(lines)):
                 x0, y0, x1, y1 = lines[points]
                 plt.plot((x0, x1), (y0, y1), 'b')
 
-            plt.figure()
-        plt.show()  
+        plt.tight_layout()
+        plt.show() 
