@@ -192,7 +192,7 @@ def main(*images):
             angles.append(calculateAngles(incision_line[:2], incision_line[2:], lines[line][:2], lines[line][2:]))
 
         # evaluation
-        evaluation = []
+        evaluation=[]
         perpendicularity = sum(angles)/len(angles)
 
         if perpendicularity >= 85:
@@ -246,7 +246,7 @@ if __name__ == '__main__':
 
             x, y, X, Y = incision
 
-            plt.subplot(len(output), 1, image + 1)
+            plt.figure()
             plt.imshow(skimage.io.imread(filename, as_gray=True), cmap='gray')
             plt.plot((x, X), (y, Y), 'r')
             plt.title(evaluation[0][1] + " with an average angle of " + str(evaluation[0][0]))
